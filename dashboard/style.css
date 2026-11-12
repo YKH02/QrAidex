@@ -1,18 +1,49 @@
+/* Right-to-left text direction for Arabic */
 
 /* General page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+    background-color: #f0eae7;
     margin: 0;
     padding: 20px;
-    color: #ac1515;
+    color: #000000;
+    direction: rtl;
+    text-align: right;
 }
 
 /* Dashboard header */
 header {
     margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
 }
+/* Logo circle styling */
+.logo-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 
+    padding: 18px 35px;
+
+    background-color: rgb(173, 13, 13);
+    color: #eff4f7;
+
+    border-radius: 50px;
+
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+/* Consciousness alert styling */
+.consciousness-alert {
+    display: inline-block;
+    background-color: #fde2e2;
+    color: #c62828;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
 /* Reports section */
 #reports-container {
     display: grid;
@@ -26,7 +57,10 @@ header {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    direction: rtl;
+    text-align: right;
 }
+
 
 /* Report title and status */
 .report-header {
@@ -45,7 +79,7 @@ header {
 .status {
     padding: 5px 10px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: bold;
 }
 

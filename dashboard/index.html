@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html lang="ar">
+<section id="reports-container" dir="rtl"> </section>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>لوحة التحكم</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     
     
     <body>
         <header>
-            <h1>QrAidex</h1>
-            <p>لوحة التحكم</p>
+    <div class="logo-circle">
+        QrAidex
+    </div>
+    <p>لوحة التحكم</p>
         </header>
 <main>
     <h1>البلاغات الحالية</h1>
 
-    <section id="report_container">
-        <article class="report-card">
-    <div class="report-header">
-        <h3>اختناق</h3>
-        <span class="status pending">تحت المعالجة</span>
-    </div>
+ <section id="reports-container">
 
-    <div class="report-details">
-        <p><strong>المقعد:</strong> </p>
-        <p><strong> هل المريض واعي: </strong> لا</p>
-        <p><strong>وصف الحالة:</strong> كان المريض يختنق ثم فقد الوعي.</p>
-        <p><strong>الوقت:</strong> November 18, 2032 at 8:07:43 PM UTC+3</p>
-    </div>
-</article>
-        </section>
+    <article class="report-card">
+
+        <div class="report-header">
+            <h3>اختناق</h3>
+            <span class="status pending">تحت المعالجة</span>
+        </div>
+        <div class="report-details">
+            <p><strong>المقعد:</strong> C3</p>
+            <p>
+                <strong>هل المريض واعي؟</strong>
+                <span class="consciousness-alert">لا - فاقد الوعي</span>
+            </p>
+            <p>
+                <strong>وصف الحالة:</strong>
+                كان المريض يختنق ثم فقد الوعي.
+            </p>
+            <p>
+                <strong>الوقت:</strong>
+                November 18, 2032 at 8:07:43 PM UTC+3
+            </p>
+        </div>
+    </article>
+</section>
 </main>
 
 
