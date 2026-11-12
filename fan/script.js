@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
+  apiKey: "AIzaSyBQYV_UZmgWxCpCwOA_jFfPDQQThGQlP3g",
+  authDomain: "qraidex.firebaseapp.com",
+  projectId: "qraidex",
+  storageBucket: "qraidex.firebasestorage.app",
+  messagingSenderId: "602574047794",
+  appId: "1:602574047794:web:d4fc8fd8e888f15abbca2b"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -39,7 +39,7 @@ document.getElementById("fanForm").addEventListener("submit", async (e) => {
     await db.collection("reports").add({
       seatNumber:  d.get("seatNumber"),
       caseType:    d.get("caseType"),
-         isConscious: d.get("conscious") === "true",
+      isConscious: d.get("conscious") === "true",
       description: document.querySelector(".special").open ? d.get("description").trim() : "",
       status:      "Pending",
       time:        firebase.firestore.FieldValue.serverTimestamp()
