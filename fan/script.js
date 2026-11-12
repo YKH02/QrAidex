@@ -1,8 +1,18 @@
-// موقع وهمي للعرض التجريبي فقط (لما ما يكون فيه QR).
-// قبل التسليم النهائي خليه فاضي هكذا: const DEMO_SEAT = "";
+const firebaseConfig = {
+  apiKey: "PASTE_HERE",
+  authDomain: "PASTE_HERE",
+  projectId: "PASTE_HERE",
+  storageBucket: "PASTE_HERE",
+  messagingSenderId: "PASTE_HERE",
+  appId: "PASTE_HERE"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// موقع وهمي للعرض التجريبي فقط. قبل التسليم النهائي: const DEMO_SEAT = "";
 const DEMO_SEAT = "A12-R14-S08";
 
-// الموقع يجي من رمز QR: ?seat=A12-R14-S08
+// الموقع من رمز QR: ?seat=A12-R14-S08
 const seat = (new URLSearchParams(location.search).get("seat") || DEMO_SEAT).trim().toUpperCase();
 const parts = seat.split("-");
 if (parts.length === 3 && parts.every(Boolean)) {
@@ -16,22 +26,30 @@ if (parts.length === 3 && parts.every(Boolean)) {
   document.getElementById("send").disabled = true;
 }
 
-// عند الضغط على إرسال: نجمع بيانات البلاغ بنفس أسماء الحقول المتفق عليها
-document.getElementById("fanForm").addEventListener("submit", (e) => {
+// إرسال البلاغ إلى Firebase (مجموعة reports)
+document.getElementById("fanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const btn = document.getElementById("send");
+  const msg = document.getElementById("msg");
   const d = new FormData(e.target);
-  const report = {
-    seatNumber:  d.get("seatNumber"),
-    caseType:    d.get("caseType"),
-    Conscious:   d.get("conscious") === "true",
-    description: document.querySelector(".special").open ? d.get("description").trim() : "",
-    status:      "Pending"
-    // time: يضيفه هتون عند الحفظ في Firebase (serverTimestamp)
-  };
 
-  console.log("بيانات البلاغ:", report);
-
-  // هتون: هنا يكون إرسال المتغير report إلى Firebase (مجموعة reports)
-
-  document.getElementById("msg").textContent = "تم إرسال البلاغ. ابقَ في مكانك، الفريق في الطريق إليك.";
+  btn.disabled = true;
+  msg.textContent = "جاري الإرسال...";
+  try {
+    await db.collection("reports").add({
+      seatNumber:  d.get("seatNumber"),
+      caseType:    d.get("caseType"),
+      Conscious:   d.get("conscious") === "true",
+      description: document.querySelector(".special").open ? d.get("description").trim() : "",
+      status:      "Pending",
+      time:        firebase.firestore.FieldValue.serverTimestamp()
+    });
+    msg.textContent = "تم إرسال البلاغ. ابقَ في مكانك، الفريق في الطريق إليك.";
+    e.target.reset();
+  } catch (err) {
+    console.error(err);
+    msg.textContent = "تعذر الإرسال. حاول مرة أخرى.";
+  } finally {
+    btn.disabled = false;
+  }
 });
