@@ -178,3 +178,64 @@ header {
     cursor: pointer;
     direction: rtl;
 }
+/* Statistics section */
+.statistics {
+margin-bottom: 35px;
+}
+
+.statistics h2,
+.reports-section h2 {
+font-size: 22px;
+margin-bottom: 18px;
+color: #123b50;
+}
+
+/* Statistics cards layout */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 15px;
+}
+
+/* Individual statistics card */
+.stat-card {
+background-color: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+text-align: center;
+border-right: 5px solid #123b50;
+}
+
+.stat-card h3 {
+font-size: 16px;
+margin: 0 0 12px;
+color: #555;
+}
+
+.stat-card p {
+font-size: 30px;
+font-weight: bold;
+margin: 0;
+color: #123b50;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+body {
+padding: 12px;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-card {
+    padding: 15px 8px;
+}
+
+.stat-card p {
+    font-size: 25px;
+}
+}

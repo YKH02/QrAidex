@@ -1,30 +1,49 @@
-<!DOCTYPE html>
-<html lang="ar">
+<head>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>لوحة التحكم</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    
-    
-    <body>
-        <header>
-    <div class="logo-circle">
-        QrAidex
-    </div>
-    <p>لوحة التحكم</p>
-        </header>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>لوحة التحكم - QrAidex</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
 <main>
-    <h1>البلاغات الحالية</h1>
 
- <section id="reports-container">
+    <section class="statistics">
+        <h2>إحصائيات الحالات</h2>
 
-</section>
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h3>إجمالي البلاغات</h3>
+                <p id="total-reports">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>حالات جديدة</h3>
+                <p id="pending-reports">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>قيد المعالجة</h3>
+                <p id="progress-reports">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>حالات تم حلها</h3>
+                <p id="resolved-reports">0</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="reports-section">
+        <h2>البلاغات الحالية</h2>
+        <div id="reports-container"></div>
+    </section>
+
 </main>
-<section id="reports-container" dir="rtl"> </section>
-
-        <script type="module" src="script.js"></script>
-    </body>
-</html>
+<script type="module" src="script.js"></script>
