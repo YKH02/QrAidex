@@ -39,7 +39,7 @@ document.getElementById("fanForm").addEventListener("submit", async (e) => {
     await db.collection("reports").add({
       seatNumber:  d.get("seatNumber"),
       caseType:    d.get("caseType"),
-      Conscious:   d.get("conscious") === "true",
+         isConscious: d.get("conscious") === "true",
       description: document.querySelector(".special").open ? d.get("description").trim() : "",
       status:      "Pending",
       time:        firebase.firestore.FieldValue.serverTimestamp()
