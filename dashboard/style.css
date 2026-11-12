@@ -1,0 +1,61 @@
+
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    color: #ac1515;
+}
+
+/* Dashboard header */
+header {
+    margin-bottom: 30px;
+}
+
+/* Reports section */
+#reports-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Individual report card */
+.report-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Report title and status */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.report-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* Pending status */
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.pending {
+    background-color: #e9bb51;
+    color: #946200;
+}
+
+/* Report details */
+.report-details p {
+    margin: 10px 0;
+    font-size: 14px;
+}
