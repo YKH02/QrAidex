@@ -15,23 +15,29 @@
     <p>الصف: <b>R14</b></p>
     <p>المقعد: <b>S08</b></p>
   </div>
-  <fieldset>
-    <legend>ما نوع الحالة؟</legend>
 
-    <label>
-      <input type="radio" name="caseType" value="اختناق">
-      اختناق: لقمة أو صعوبة في التنفس
-    </label>
+  <form id="fanForm">
 
-    <label>
-      <input type="radio" name="caseType" value="إجهاد حراري">
-      إجهاد حراري: دوخة، إعياء، حرارة مرتفعة
-    </label>
+    <fieldset>
+      <legend>ما نوع الحالة؟</legend>
+      <label><input type="radio" name="caseType" value="اختناق"> اختناق: لقمة أو صعوبة في التنفس</label>
+      <label><input type="radio" name="caseType" value="إجهاد حراري"> إجهاد حراري: دوخة، إعياء، حرارة مرتفعة</label>
+      <label><input type="radio" name="caseType" value="إغماء"> إغماء: فقدان الوعي أو دوخة شديدة</label>
+    </fieldset>
 
-    <label>
-      <input type="radio" name="caseType" value="إغماء">
-      إغماء: فقدان الوعي أو دوخة شديدة
-    </label>
-  </fieldset>
+    <fieldset>
+      <legend>هل المريض واعٍ؟</legend>
+      <label><input type="radio" name="conscious" value="true"> نعم</label>
+      <label><input type="radio" name="conscious" value="false"> لا</label>
+    </fieldset>
+
+    <details>
+      <summary>حالة خاصة؟ أضف ملاحظة</summary>
+      <textarea name="description" placeholder="اكتب ما يحتاجه المسعف أن يعرفه"></textarea>
+    </details>
+
+    <button type="submit">إرسال البلاغ</button>
+  </form>
+
 </body>
 </html>
