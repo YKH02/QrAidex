@@ -72,7 +72,7 @@ header {
 
 .report-header h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 /* Pending status */
@@ -83,13 +83,98 @@ header {
     font-weight: bold;
 }
 
+/* General status styling */
+.status {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Pending */
 .status.pending {
-    background-color: #e9bb51;
-    color: #946200;
+    background-color: #15d11e;
+    color: #000000;
+}
+
+/* In Progress */
+.status.in-progress {
+    background-color: #ffbb00;
+    color: #7c5c05;
+}
+
+/* Resolved */
+.status.resolved {
+    background-color: #65ff8e;
+    color: #0a5219;
 }
 
 /* Report details */
 .report-details p {
     margin: 10px 0;
     font-size: 14px;
+}
+.status-action {
+    width: 100%;
+    padding: 11px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #123b50;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.status-action:hover {
+    background-color: #1b566f;
+}
+
+.status-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Priority section */
+.priority-section {
+    margin: 12px 0;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.priority-high {
+    background-color: #fde2e2;
+    color: #c62828;
+}
+
+.priority-medium {
+    background-color: #fff0d6;
+    color: #a66a00;
+}
+
+.priority-low {
+    background-color: #dff5e5;
+    color: #218838;
+}
+
+/* Priority selector */
+.priority-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #d5dce2;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+    direction: rtl;
 }
