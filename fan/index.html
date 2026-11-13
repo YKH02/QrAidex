@@ -4,10 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>معلومات الحالة</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<form id="fanForm">
   <h1>معلومات الحالة</h1>
 
+  <div class="card">
+    <div class="loc-head">📍 موقعك الحالي <small>من رمز QR</small></div>
+    <div class="loc-grid" id="locGrid" hidden>
+      <div><span>القسم</span><b id="locSection">-</b></div>
+      <div><span>الصف</span><b id="locRow">-</b></div>
+      <div><span>المقعد</span><b id="locSeat">-</b></div>
+    </div>
+    <p id="noSeat" class="no-seat" hidden>لم يتم تحديد موقعك. امسح رمز QR الموجود على مقعدك ثم أعد المحاولة.</p>
+    <input type="hidden" id="seatNumber" name="seatNumber">
+  </div>
+
+  <fieldset>
+    <legend>ما نوع الحالة؟</legend>
+
+    <label class="case-card case-choking">
+      <input type="radio" name="caseType" value="اختناق" required>
+      <span class="case-title">اختناق</span>
+      <span class="case-sub">لقمة أو صعوبة في التنفس</span>
+    </label>
+
+    <label class="case-card case-heat">
+      <input type="radio" name="caseType" value="إجهاد حراري">
+      <span class="case-title">إجهاد حراري</span>
+      <span class="case-sub">دوخة، إعياء، حرارة مرتفعة</span>
+    </label>
+
+    <label class="case-card case-faint">
+      <input type="radio" name="caseType" value="إغماء">
+      <span class="case-title">إغماء</span>
+      <span class="case-sub">فقدان الوعي أو دوخة شديدة</span>
+    </label>
+  </fieldset>
+
+  <div class="card">
+    <fieldset>
+      <legend>هل المريض واعٍ؟</legend>
+      <div class="yn">
+        <label><input type="radio" name="conscious" value="true" required> نعم</label>
+        <label><input type="radio" name="conscious" value="false"> لا</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <details class="card special">
+    <summary>حالة خاصة؟ أضف ملاحظة</summary>
+    <textarea id="description" name="description" placeholder="اكتب ما يحتاجه المسعف أن يعرفه"></textarea>
+  </details>
+
+  <p class="privacy">🔒 لا نجمع أي بيانات شخصية. البلاغ يتضمن موقع المقعد ونوع الحالة فقط.</p>
+
+  <button type="submit" id="send">إرسال البلاغ</button>
+  <p id="msg" role="status"></p>
+</form>
+
+   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+   <script src="script.js"></script>
 </body>
 </html>
