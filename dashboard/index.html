@@ -1,52 +1,64 @@
+
 <!DOCTYPE html>
-<html lang="ar">
-<section id="reports-container" dir="rtl"> </section>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>لوحة التحكم</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    
-    
-    <body>
-        <header>
-    <div class="logo-circle">
-        QrAidex
-    </div>
-    <p>لوحة التحكم</p>
-        </header>
-<main>
-    <h1>البلاغات الحالية</h1>
+<html lang="ar" dir="rtl">
 
- <section id="reports-container">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <article class="report-card">
+    <title>لوحة التحكم - QrAidex</title>
 
-        <div class="report-header">
-            <h3>اختناق</h3>
-            <span class="status pending">تحت المعالجة</span>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        <div class="logo-circle">QrAidex</div>
+        <div class="header-text">
+            <h1>لوحة تحكم المسعفين</h1>
+            <p>متابعة البلاغات والاستجابة للحالات الطارئة</p>
         </div>
-        <div class="report-details">
-            <p><strong>المقعد:</strong> C3</p>
-            <p>
-                <strong>هل المريض واعي؟</strong>
-                <span class="consciousness-alert">لا - فاقد الوعي</span>
-            </p>
-            <p>
-                <strong>وصف الحالة:</strong>
-                كان المريض يختنق ثم فقد الوعي.
-            </p>
-            <p>
-                <strong>الوقت:</strong>
-                November 18, 2032 at 8:07:43 PM UTC+3
-            </p>
-        </div>
-    </article>
-</section>
-</main>
+    </header>
 
+    <main>
 
-        <script src="script.js"></script>
-    </body>
+        <section class="reports-section">
+            <h2>البلاغات الواردة</h2>
+            <div id="reports-container"></div>
+        </section>
+
+        <section class="statistics">
+            <h2>إحصائيات الحالات</h2>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h3>إجمالي البلاغات</h3>
+                    <p id="total-reports">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>حالات جديدة</h3>
+                    <p id="pending-reports">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>قيد المعالجة</h3>
+                    <p id="progress-reports">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>حالات تم حلها</h3>
+                    <p id="resolved-reports">0</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script type="module" src="script.js"></script>
+
+</body>
 </html>
