@@ -1,20 +1,20 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 import {
-getFirestore,
-collection,
-onSnapshot,
-updateDoc,
-doc as firestoreDoc
+    getFirestore,
+    collection,
+    onSnapshot,
+    updateDoc,
+    doc as firestoreDoc
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
-apiKey: "AIzaSyBQYV_UZmgWxCpCwOA_jFfPDThGQlP3g",
-authDomain: "qraidex.firebaseapp.com",
-projectId: "qraidex",
-storageBucket: "qraidex.firebasestorage.app",
-messagingSenderId: "602574047794",
-appId: "1:602574047794:web:d4fc8fd8e888f15abbca2b"
+    apiKey: "AIzaSyBQYV_UZmgWxCpCwOA_jFfPDThGQlP3g",
+    authDomain: "qraidex.firebaseapp.com",
+    projectId: "qraidex",
+    storageBucket: "qraidex.firebasestorage.app",
+    messagingSenderId: "602574047794",
+    appId: "1:602574047794:web:d4fc8fd8e888f15abbca2"
 };
 
 // Initialize Firebase
@@ -23,199 +23,172 @@ const db = getFirestore(app);
 
 const reportsContainer = document.getElementById("reports-container");
 
-// Automatically suggest a priority
+// Automatically suggest a priority.
+// These are the same criteria already used in the dashboard.
 function calculatePriority(report) {
-const caseType = (report.caseType || "").toLowerCase();
+    const caseType = (report.caseType || "").toLowerCase();
 
-if (report.isConscious === false) {
-    return "High";
-}
-
-if (
-    caseType.includes("اختناق") ||
-    caseType.includes("صعوبة التنفس") ||
-    caseType.includes("ضيق التنفس") ||
-    caseType.includes("choking") ||
-    caseType.includes("breathing")
-) {
-    return "High";
-}
-
-return "Medium";
-}
-
-// Update dashboard statistics
-function updateStatistics(docs) {
-let total = docs.length;
-let pending = 0;
-let inProgress = 0;
-let resolved = 0;
-
-docs.forEach((reportDoc) => {
-    const report = reportDoc.data();
-    const status = report.status || "Pending";
+    if (report.isConscious === false) {
+        return "High";
+    }
 
     if (
-        ["تم الحل", "مكتمل", "Solved", "Resolved"].includes(status)
+        caseType.includes("اختناق") ||
+        caseType.includes("صعوبة التنفس") ||
+        caseType.includes("ضيق التنفس") ||
+        caseType.includes("choking") ||
+        caseType.includes("breathing")
     ) {
-        resolved++;
-    } else if (
-        ["تحت المعالجة", "قيد المعالجة", "In Progress"].includes(status)
-    ) {
-        inProgress++;
-    } else {
-        pending++;
+        return "High";
     }
-});
 
-document.getElementById("total-reports").textContent = total;
-document.getElementById("pending-reports").textContent = pending;
-document.getElementById("progress-reports").textContent = inProgress;
-document.getElementById("resolved-reports").textContent = resolved;
+    return "Medium";
 }
 
-// Listen for changes in Firestore
-onSnapshot(collection(db, "reports"), (snapshot) => {
+const resolvedStatuses = ["تم الحل", "مكتمل", "Solved", "Resolved"];
+const inProgressStatuses = ["تحت المعالجة", "قيد المعالجة", "In Progress"];
 
-// Update statistics automatically
-updateStatistics(snapshot.docs);
+function getStatusInfo(status) {
+    if (resolvedStatuses.includes(status)) {
+        return { className: "resolved", nextStatus: null, buttonText: "" };
+    }
 
-reportsContainer.innerHTML = "";
+    if (inProgressStatuses.includes(status)) {
+        return {
+            className: "in-progress",
+            nextStatus: "تم الحل",
+            buttonText: "إنهاء الحالة"
+        };
+    }
 
-if (snapshot.empty) {
-    reportsContainer.textContent = "لا توجد بلاغات حالياً.";
-    return;
+    return {
+        className: "pending",
+        nextStatus: "تحت المعالجة",
+        buttonText: "بدء المعالجة"
+    };
 }
 
-const priorityOrder = {
-    High: 1,
-    Medium: 2,
-    Low: 3
-};
+// Update dashboard statistics from the current Firestore snapshot.
+function updateStatistics(docs) {
+    let total = docs.length;
+    let pending = 0;
+    let inProgress = 0;
+    let resolved = 0;
 
-const sortedReports = [...snapshot.docs].sort((a, b) => {
-    const reportA = a.data();
-    const reportB = b.data();
+    docs.forEach((reportDoc) => {
+        const report = reportDoc.data();
+        const status = report.status || "Pending";
 
-    const priorityA = reportA.priority || calculatePriority(reportA);
-    const priorityB = reportB.priority || calculatePriority(reportB);
+        if (resolvedStatuses.includes(status)) {
+            resolved++;
+        } else if (inProgressStatuses.includes(status)) {
+            inProgress++;
+        } else {
+            pending++;
+        }
+    });
 
-    return (priorityOrder[priorityA] || 2) -
-           (priorityOrder[priorityB] || 2);
-});
+    document.getElementById("total-reports").textContent = total;
+    document.getElementById("pending-reports").textContent = pending;
+    document.getElementById("progress-reports").textContent = inProgress;
+    document.getElementById("resolved-reports").textContent = resolved;
+}
 
-sortedReports.forEach((reportDoc) => {
+function createDetail(label, value, extraClass = "") {
+    const paragraph = document.createElement("p");
+    if (extraClass) paragraph.className = extraClass;
 
+    const strong = document.createElement("strong");
+    strong.textContent = label;
+
+    const span = document.createElement("span");
+    span.textContent = value;
+
+    paragraph.append(strong, span);
+    return paragraph;
+}
+
+function createReportCard(reportDoc) {
     const report = reportDoc.data();
+    const reportRef = firestoreDoc(db, "reports", reportDoc.id);
 
-    // Get existing priority or calculate a new one
-    let priority = report.priority;
+    // Use the existing Firestore case type; do not substitute sample types.
+    const caseType = report.caseType || "حالة طارئة";
+    let priority = report.priority || calculatePriority(report);
 
-    if (!priority) {
-        priority = calculatePriority(report);
-
-        updateDoc(
-            firestoreDoc(db, "reports", reportDoc.id),
-            { priority: priority }
-        ).catch(error => {
+    if (!report.priority) {
+        updateDoc(reportRef, { priority }).catch((error) => {
             console.error("Error saving priority:", error);
         });
     }
 
-    // Determine report status
-    const status = report.status || "غير محدد";
+    const status = report.status || "بانتظار الاستجابة";
+    const statusInfo = getStatusInfo(status);
 
-    let statusClass = "pending";
-    let nextStatus = null;
-    let buttonText = "";
-
-    if (["تم الحل", "مكتمل", "Solved", "Resolved"].includes(status)) {
-        statusClass = "resolved";
-    } else if (
-        ["تحت المعالجة", "قيد المعالجة", "In Progress"].includes(status)
-    ) {
-        statusClass = "in-progress";
-        nextStatus = "تم الحل";
-        buttonText = "إنهاء الحالة";
-    } else {
-        statusClass = "pending";
-        nextStatus = "تحت المعالجة";
-        buttonText = "بدء المعالجة";
-    }
-
-    // Format timestamp
     const time = report.time?.toDate
         ? report.time.toDate().toLocaleString("ar-SA")
         : "غير محدد";
 
-    // Patient consciousness
     const consciousness = report.isConscious === false
         ? "فاقد الوعي"
         : report.isConscious === true
             ? "واعٍ"
             : "غير محدد";
 
-    // Create report card
     const card = document.createElement("article");
     card.className = "report-card";
 
-    // Report header
+    // Card heading: case type and current status.
     const header = document.createElement("div");
     header.className = "report-header";
 
     const title = document.createElement("h3");
-    title.textContent = report.caseType || "حالة طارئة";
+    title.textContent = caseType;
 
     const statusBadge = document.createElement("span");
-    statusBadge.className = `status ${statusClass}`;
+    statusBadge.className = `status ${statusInfo.className}`;
     statusBadge.textContent = status;
 
     header.append(title, statusBadge);
 
-    // Report details
+    // Seat and submission time.
+    const meta = document.createElement("div");
+    meta.className = "report-meta";
+    meta.append(
+        createDetail("المقعد", report.seatNumber || "غير محدد"),
+        createDetail("الوقت", time)
+    );
+
+    // Description and consciousness information.
     const details = document.createElement("div");
     details.className = "report-details";
+    details.append(
+        createDetail("وصف الحالة:", report.description || "لا يوجد وصف"),
+        createDetail(
+            "حالة المريض:",
+            consciousness,
+            report.isConscious === false ? "consciousness-alert" : ""
+        )
+    );
 
-    const fields = [
-        ["المقعد:", report.seatNumber || "غير محدد"],
-        ["حالة المريض:", consciousness],
-        ["وصف الحالة:", report.description || "لا يوجد وصف"],
-        ["الوقت:", time]
-    ];
+    // Priority badge and selector.
+    const priorityArea = document.createElement("div");
+    priorityArea.className = "priority-area";
 
-    fields.forEach(([label, value]) => {
-        const paragraph = document.createElement("p");
-        const strong = document.createElement("strong");
-        const span = document.createElement("span");
+    const priorityBadge = document.createElement("span");
+    priorityBadge.className = `priority-badge priority-${priority.toLowerCase()}`;
 
-        strong.textContent = label + " ";
-        span.textContent = value;
+    const priorityNames = {
+        High: "أولوية عالية",
+        Medium: "أولوية متوسطة",
+        Low: "أولوية منخفضة"
+    };
 
-        paragraph.append(strong, span);
-        details.appendChild(paragraph);
-    });
+    priorityBadge.textContent = priorityNames[priority] || priority;
 
-  // Priority section
-const prioritySection = document.createElement("div");
-prioritySection.className = "priority-section";
-
-const priorityBadge = document.createElement("span");
-priorityBadge.className = `priority-badge priority-${priority.toLowerCase()}`;
-
-const priorityNames = {
-    High: "أولوية عالية",
-    Medium: "أولوية متوسطة",
-    Low: "أولوية منخفضة"
-};
-
-priorityBadge.textContent = priorityNames[priority] || priority;
-
-prioritySection.appendChild(priorityBadge);
-    card.append(header, prioritySection, details);
-
-    // Priority selector
     const prioritySelect = document.createElement("select");
     prioritySelect.className = "priority-select";
+    prioritySelect.setAttribute("aria-label", "تغيير أولوية البلاغ");
 
     const priorityOptions = [
         { value: "High", text: "أولوية عالية" },
@@ -223,70 +196,103 @@ prioritySection.appendChild(priorityBadge);
         { value: "Low", text: "أولوية منخفضة" }
     ];
 
-    priorityOptions.forEach(option => {
+    priorityOptions.forEach((option) => {
         const optionElement = document.createElement("option");
         optionElement.value = option.value;
         optionElement.textContent = option.text;
-
-        if (option.value === priority) {
-            optionElement.selected = true;
-        }
-
+        optionElement.selected = option.value === priority;
         prioritySelect.appendChild(optionElement);
     });
 
     prioritySelect.addEventListener("change", async () => {
+        const previousPriority = priority;
         prioritySelect.disabled = true;
 
         try {
-            await updateDoc(
-                firestoreDoc(db, "reports", reportDoc.id),
-                { priority: prioritySelect.value }
-            );
-
-            console.log("Priority updated successfully.");
+            await updateDoc(reportRef, { priority: prioritySelect.value });
         } catch (error) {
             console.error("Error updating priority:", error);
+            prioritySelect.value = previousPriority;
             alert("تعذر تحديث الأولوية.");
+        } finally {
+            prioritySelect.disabled = false;
         }
-
-        prioritySelect.disabled = false;
     });
 
-    card.appendChild(prioritySelect);
+    priorityArea.append(priorityBadge, prioritySelect);
 
-    // Add status update button if case is not resolved
-    if (nextStatus) {
+    // Status action button (not shown for resolved reports).
+    const actions = document.createElement("div");
+    actions.className = "report-actions";
+
+    if (statusInfo.nextStatus) {
         const actionButton = document.createElement("button");
         actionButton.className = "status-action";
-        actionButton.textContent = buttonText;
+        actionButton.textContent = statusInfo.buttonText;
 
         actionButton.addEventListener("click", async () => {
             actionButton.disabled = true;
             actionButton.textContent = "جاري التحديث...";
 
             try {
-                await updateDoc(
-                    firestoreDoc(db, "reports", reportDoc.id),
-                    { status: nextStatus }
-                );
-
-                console.log("Report status updated successfully.");
+                await updateDoc(reportRef, {
+                    status: statusInfo.nextStatus
+                });
             } catch (error) {
                 console.error("Error updating status:", error);
                 actionButton.disabled = false;
-                actionButton.textContent = buttonText;
+                actionButton.textContent = statusInfo.buttonText;
                 alert("تعذر تحديث حالة البلاغ.");
             }
         });
 
-        card.appendChild(actionButton);
+        actions.appendChild(actionButton);
+    } else {
+        const resolvedNote = document.createElement("span");
+        resolvedNote.className = "resolved-note";
+        resolvedNote.textContent = "تم إنهاء الحالة";
+        actions.appendChild(resolvedNote);
     }
 
-    reportsContainer.appendChild(card);
-});
+    card.append(header, meta, details, priorityArea, actions);
+    return card;
+}
+
+// Listen for live changes in Firestore.
+onSnapshot(collection(db, "reports"), (snapshot) => {
+    updateStatistics(snapshot.docs);
+    reportsContainer.innerHTML = "";
+
+    if (snapshot.empty) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "empty-state";
+        emptyMessage.textContent = "لا توجد بلاغات حالياً.";
+        reportsContainer.appendChild(emptyMessage);
+        return;
+    }
+
+    const priorityOrder = {
+        High: 1,
+        Medium: 2,
+        Low: 3
+    };
+
+    const sortedReports = [...snapshot.docs].sort((a, b) => {
+        const reportA = a.data();
+        const reportB = b.data();
+
+        const priorityA = reportA.priority || calculatePriority(reportA);
+        const priorityB = reportB.priority || calculatePriority(reportB);
+
+        return (priorityOrder[priorityA] || 2) -
+            (priorityOrder[priorityB] || 2);
+    });
+
+    sortedReports.forEach((reportDoc) => {
+        reportsContainer.appendChild(createReportCard(reportDoc));
+    });
+
 }, (error) => {
-console.error("Error retrieving reports:", error);
-reportsContainer
-textContent = "حدث خطأ أثناء تحميل البلاغات.";
+    console.error("Error retrieving reports:", error);
+    reportsContainer.textContent = "حدث خطأ أثناء تحميل البلاغات.";
 });
