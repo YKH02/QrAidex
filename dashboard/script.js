@@ -163,9 +163,9 @@ function createReportCard(reportDoc) {
     const details = document.createElement("div");
     details.className = "report-details";
     details.append(
-        createDetail("وصف الحالة", report.description || "لا يوجد وصف"),
+        createDetail("وصف الحالة:", report.description || "لا يوجد وصف"),
         createDetail(
-            "حالة المريض",
+            "حالة المريض:",
             consciousness,
             report.isConscious === false ? "consciousness-alert" : ""
         )
