@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - QrAidex</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="dashboard-header">
+        <div class="logo-circle">QrAidex</div>
+        <div class="header-text">
+            <h1>لوحة تحكم المسعفين</h1>
+            <p>متابعة البلاغات والاستجابة للحالات الطارئة</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="reports-section">
+            <div class="section-heading">
+                <div>
+                    <h2>البلاغات الواردة</h2>
+                    <p class="section-description">راجع تفاصيل البلاغات وحدّث حالة الاستجابة.</p>
+                </div>
+            </div>
+            <div id="reports-container" aria-live="polite">
+                <p class="empty-state">جاري تحميل البلاغات...</p>
+            </div>
+        </section>
+
+        <section class="statistics">
+            <div class="section-heading">
+                <div>
+                    <h2>إحصائيات الحالات</h2>
+                    <p class="section-description">ملخص البلاغات حسب حالة الاستجابة.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>إجمالي البلاغات</h3>
+                    <p id="total-reports">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>حالات جديدة</h3>
+                    <p id="pending-reports">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>قيد المعالجة</h3>
+                    <p id="progress-reports">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>حالات تم حلها</h3>
+                    <p id="resolved-reports">0</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
