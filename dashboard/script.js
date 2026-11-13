@@ -156,8 +156,7 @@ sortedReports.forEach((reportDoc) => {
             : "غير محدد";
 
     // Create report card
-    const card = document
-    createElement("article");
+    const card = document.createElement("article");
     card.className = "report-card";
 
     // Report header
@@ -201,12 +200,12 @@ const prioritySection = document.createElement("div");
 prioritySection.className = "priority-section";
 
 const priorityBadge = document.createElement("span");
-priorityBadge.className = 'priority-badge priority-${priority.toLowerCase()}';
+priorityBadge.className = `priority-badge priority-${priority.toLowerCase()}`;
 
 const priorityNames = {
-High: "أولوية عالية",
-Medium: "أولوية متوسطة",
-Low: "أولوية منخفضة"
+    High: "أولوية عالية",
+    Medium: "أولوية متوسطة",
+    Low: "أولوية منخفضة"
 };
 
 priorityBadge.textContent = priorityNames[priority] || priority;
