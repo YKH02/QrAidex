@@ -10,7 +10,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const pending_status = "بانتظار الاستجابة";
 // موقع وهمي للعرض التجريبي فقط. قبل التسليم النهائي: const DEMO_SEAT = "";
-const DEMO_SEAT = "A12-R14-S08";
+const DEMO_SEAT = "";
 
 // الموقع من رمز QR: ?seat=A12-R14-S08
 const seat = (new URLSearchParams(location.search).get("seat") || DEMO_SEAT).trim().toUpperCase();
