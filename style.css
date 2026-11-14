@@ -1,0 +1,115 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "IBM Plex Sans Arabic", "Tajawal", system-ui, sans-serif;
+  background: #FFFFFF;
+  color: #1E2A44;
+  direction: rtl;
+}
+
+.page {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 20px 18px 32px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  background: #F7F8FA;
+  border: 1px solid #E4E7EC;
+  border-radius: 22px;
+  padding: 22px 22px 28px;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.subtitle { font-size: 15px; font-weight: 600; }
+
+.badge {
+  background: #FDECEC;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 999px;
+  direction: ltr;
+}
+
+.hero h1 { font-size: 30px; font-weight: 700; margin-bottom: 12px; }
+.hero h1 span { direction: ltr; unicode-bidi: isolate; }
+
+.hero p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #667085;
+  margin-bottom: 22px;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.btn-danger { background: #DC2626; color: #FFFFFF; margin-bottom: 14px; }
+.btn-danger:hover { background: #B91C1C; }
+.btn-light { background: #FFFFFF; color: #1E2A44; border: 1px solid #E4E7EC; }
+
+.guide { margin-top: 36px; }
+.guide h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+
+.steps {
+  border: 1px solid #E4E7EC;
+  border-radius: 22px;
+  padding: 10px 20px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #667085;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #F7F8FA;
+  color: #1E2A44;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.footer svg { color: #667085; }
