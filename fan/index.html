@@ -20,7 +20,7 @@
       <h1>مرحباً بك في <span>(QrAidex)</span></h1>
       <p>أبلغ عن حالات الطوارئ الطبية بسرعة، وحدد مكانك بسهولة، واطلع على الإرشادات الأساسية قبل وصول الفريق.</p>
 
-      <a class="btn btn-danger" id="reportBtn" href="index.html">
+      <a class="btn btn-danger" id="reportBtn" href="report.html">
         الإبلاغ عن حالة طارئة
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
@@ -29,7 +29,7 @@
         </svg>
       </a>
 
-      <a class="btn btn-light" id="qrBtn" href="index.html">
+      <a class="btn btn-light" id="qrBtn" href="report.html">
         مسح رمز QR
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7" rx="1"/>
@@ -61,8 +61,8 @@
 
   <script>
     var q = location.search;
-    document.getElementById('reportBtn').href = 'index.html' + q;
-    document.getElementById('qrBtn').href = 'index.html' + q;
+    document.getElementById('reportBtn').href = 'report.html' + q;
+    document.getElementById('qrBtn').href = 'report.html' + q;
   </script>
 </body>
 </html>
