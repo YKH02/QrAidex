@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QrAidex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <main class="page">
+
+    <section class="hero">
+      <div class="hero-top">
+        <span class="subtitle">منصة الإغاثة للحالات الطارئة</span>
+        <span class="badge">QrAidex</span>
+      </div>
+
+      <h1>مرحباً بك في <span>(QrAidex)</span></h1>
+      <p>أبلغ عن حالات الطوارئ الطبية بسرعة، وحدد مكانك بسهولة، واطلع على الإرشادات الأساسية قبل وصول الفريق.</p>
+
+      <a class="btn btn-danger" id="reportBtn" href="index.html">
+        الإبلاغ عن حالة طارئة
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </a>
+
+      <a class="btn btn-light" id="qrBtn" href="index.html">
+        مسح رمز QR
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>
+        </svg>
+      </a>
+    </section>
+
+    <section class="guide">
+      <h2>الإرشادات في حال الطوارئ</h2>
+      <div class="steps">
+        <div class="step"><span class="step-num">١</span><span>اضغط على زر الإبلاغ السريع إذا احتجت إلى مساعدة طبية فورية.</span></div>
+        <div class="step"><span class="step-num">٢</span><span>استخدم مسح رمز QR لتحديد مكانك بدقة قبل إرسال الطلب.</span></div>
+        <div class="step"><span class="step-num">٣</span><span>اتبع الإرشادات الظاهرة على الشاشة حتى وصول الفريق.</span></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      <span>QrAidex</span>
+    </footer>
+
+  </main>
+
+  <script>
+    var q = location.search;
+    document.getElementById('reportBtn').href = 'index.html' + q;
+    document.getElementById('qrBtn').href = 'index.html' + q;
+  </script>
+</body>
+</html>
