@@ -22,7 +22,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const reportsContainer = document.getElementById("reports-container");
-
+const pending_status = "بانتظار الاستجابة";
 // Automatically suggest a priority.
 // These are the same criteria already used in the dashboard.
 function calculatePriority(report) {
@@ -77,7 +77,7 @@ function updateStatistics(docs) {
 
     docs.forEach((reportDoc) => {
         const report = reportDoc.data();
-        const status = report.status || "Pending";
+        const status = report.status || pending_status;
 
         if (resolvedStatuses.includes(status)) {
             resolved++;

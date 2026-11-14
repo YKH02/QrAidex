@@ -8,7 +8,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
+const pending_status = "بانتظار الاستجابة";
 // موقع وهمي للعرض التجريبي فقط. قبل التسليم النهائي: const DEMO_SEAT = "";
 const DEMO_SEAT = "A12-R14-S08";
 
@@ -41,7 +41,7 @@ document.getElementById("fanForm").addEventListener("submit", async (e) => {
       caseType:    d.get("caseType"),
       isConscious: d.get("conscious") === "true",
       description: document.querySelector(".special").open ? d.get("description").trim() : "",
-      status:      "Pending",
+      status:      pending_status,
       time:        firebase.firestore.FieldValue.serverTimestamp()
     });
     msg.textContent = "تم إرسال البلاغ. ابقَ في مكانك، الفريق في الطريق إليك.";
